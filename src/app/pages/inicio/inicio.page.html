@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar> 
+    <div class=topo>	
+	  <ion-tab-button  (click)="abrirInfo()"> <ion-icon name="menu-outline"></ion-icon> </ion-tab-button> 
+    </div><div class=topo>	  
+	  <ion-title>Lercio Teotonio Gontijo</ion-title> 
+    </div>	    
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  <ion-button (click)="presentModal()">Inserir Dados</ion-button>
+  <div>
+    <ion-text *ngIf="dados.length == 0 ">Nenhum registro encontrado</ion-text>
+  </div>
+  <ion-grid *ngIf="dados.length > 0 ">
+    <div class=tabela>
+     <div class=row>	   
+        <div class="col header">Data</div>	  
+        <div class="col header">Dia</div>	  
+        <div class="col header">Sis</div>	  
+        <div class="col header">Pulso</div>	  
+        <div class="col header">Posição</div>	  
+     </div>
+     <div class=row *ngFor="let item of dados" (click)="excluir(item)">
+        <div class="col pri">{{item.value.data | date:"dd/MM HH:mm"}} </div>
+        <div class=col>{{item.value.diastolica}} </div>
+        <div class=col>{{item.value.sistolica}} </div>
+        <div class=col>{{item.value.pulso}} </div>
+        <div class="col pri">{{item.value.posicao}}</div>
+     </div>
+    </div>
+  </ion-grid>
+  
+</ion-content>
