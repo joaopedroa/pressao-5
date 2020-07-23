@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DadosPage } from 'src/app/modal/dados/dados.page';
-import { NavController, ModalController, AlertController } from '@ionic/angular';
+import { NavController, ModalController, AlertController, IonInfiniteScroll } from '@ionic/angular';
 import { DatabaseService } from 'src/app/core/service/database.service';
 import { InformacaoPage } from 'src/app/modal/informacao/informacao.page';
 
@@ -10,11 +10,28 @@ import { InformacaoPage } from 'src/app/modal/informacao/informacao.page';
   styleUrls: ['./inicio.page.scss'],
 })
 export class InicioPage implements OnInit {
-
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   dados:any[] = [];
 
   constructor(public navCtrl: NavController,public modalController: ModalController, public dadoService:DatabaseService, public alertController: AlertController) {
     this.getAllRegistros();
+  }
+
+  loadData(event) {
+    setTimeout(() => {
+      console.log('Done');
+      event.target.complete();
+
+      // App logic to determine if all data is loaded
+      // and disable the infinite scroll
+      if (this.dados.length == 3) {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  toggleInfiniteScroll() {
+    this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
   }
 
   public ngOnInit(){

@@ -15,33 +15,6 @@ export class DatabaseService {
 
   constructor(private storage: Storage, private datepipe: DatePipe, private sqLite:SQLite, private sqLitePorter:SQLitePorter) { }
 
-  /*
-  async openDatabase(){
-    try {
-      this.db = await this.sqLite.create({name: this.databaseName, location: 'default'});
-      await this.createDatabase();
-    } catch (error) {
-      console.log("Ocorreu um erro ao criar o banco de dados", error)
-    }
-  }
-
-  async createDatabase(){
-    const sqlCreateDatabase = this.getCreateDatabase();
-    const result = await this.sqLitePorter.importSqlToDb(this.db,sqlCreateDatabase);
-    return result ? true : false;
-  }
-
-  getCreateDatabase(){
-    const sqls = [];
-    sqls.push('CREATE TABLE IF NOT EXISTS dados (id integer primary key AUTOINCREMENT, data TEXT, diastolica TEXT, sistolica TEXT, pulso TEXT, posicao TEXT);');
-    return sqls.join('\n');
-  }
-
-  executeSql(sql:string, params?:any[]){
-    return this.db.executeSql(sql, params);
-  }
-  */
-
  public insert(dado: Dados) {
   let key = this.datepipe.transform(new Date(), "ddMMyyyyHHmmss");
   return this.save(key, dado);
@@ -71,7 +44,6 @@ public getAll() {
     dados.push(dado);
   })
     .then(() => {
-      console.log('testeteste',dados);
       return Promise.resolve(dados);
     })
     .catch((error) => {
